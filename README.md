@@ -19,8 +19,11 @@
 <!-- HERO IMAGE / DEMO BANNER                                                   -->
 <!-- ========================================================================== -->
 <div align="center">
+  <img src="public/image.png" alt="WETH Zero-Trust AI Agent Execution & Landing Page" width="100%" />
+  <p><i>Figure 1: WETH Landing Page — Zero-Trust AI Agent Execution with Ironclad Ethereum Security</i></p>
+  <br />
   <img src="public/dashboard.png" alt="WETH AI Agentic Wallet Infrastructure Hero Banner" width="100%" />
-  <p><i>Figure 1: WETH Unified Architecture — Autonomous AI Reasoning paired with Zero-Trust Human Execution</i></p>
+  <p><i>Figure 2: WETH Human-in-the-Loop Web Dashboard — Autonomous AI Reasoning paired with Zero-Trust Execution</i></p>
 </div>
 
 ---
