@@ -14,12 +14,17 @@ import {
   ExternalLink,
   ShieldCheck,
   Cpu,
-  Terminal,
+  Terminal as TerminalIcon,
+  Code2,
+  FileJson,
+  Play,
+  Sparkles,
 } from 'lucide-react';
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copiedStep, setCopiedStep] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'terminal' | 'mcp' | 'agent'>('terminal');
 
   const copyText = (key: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -29,10 +34,10 @@ export default function LandingPage() {
 
   const navLinks = [
     { label: 'Console', href: 'http://localhost:3002/signing' },
-    { label: 'Features', href: '#features' },
-    { label: 'Workflow', href: '#working' },
-    { label: 'Setup', href: '#download' },
-    { label: 'Docs', href: 'https://github.com/ayushkumar2601/weth_wallet_devcon' },
+    { label: 'Architecture', href: '#features' },
+    { label: 'Interactive Code', href: '#code-showcase' },
+    { label: 'Setup Guide', href: '#download' },
+    { label: 'GitHub', href: 'https://github.com/ayushkumar2601/weth_wallet_devcon' },
   ];
 
   const fadeUp = {
@@ -48,20 +53,50 @@ export default function LandingPage() {
     }),
   };
 
-  const mcpSnippet = `{
+  const terminalCloneCode = `# 1. Clone the Weth zero-trust repository
+git clone https://github.com/ayushkumar2601/weth_wallet_devcon.git
+cd weth_wallet_devcon
+
+# 2. Install workspace monorepo dependencies
+pnpm install
+
+# 3. Launch local Weth Signing Console & Core Backend
+pnpm dev`;
+
+  const mcpJsonCode = `{
   "mcpServers": {
     "weth-wallet": {
       "command": "node",
-      "args": ["/path/to/weth/apps/mcp-server/dist/index.js"]
+      "args": [
+        "/absolute/path/to/weth_wallet_devcon/apps/mcp-server/dist/index.js"
+      ],
+      "env": {
+        "DATABASE_URL": "postgresql://weth:weth_pass@localhost:5432/weth_db?schema=public"
+      }
     }
   }
 }`;
 
+  const agentSessionCode = `> Prompting Claude: "Check my Sepolia ETH balance and draft a 0.015 ETH transfer to vitalik.eth"
+
+[MCP Client] Executing tool: get_balance({ address: "0x71C...E39a" })
+[Weth Core]  Returned: { balance: "1.4820 ETH", status: "SAFE" }
+
+[MCP Client] Executing tool: simulate_transaction({ to: "vitalik.eth", value: "0.015 ETH" })
+[Weth Core]  Simulation SUCCESS. Gas Estimated: 21,000 | Fee: 0.00014 ETH
+
+[MCP Client] Executing tool: create_transaction_draft(...)
+[Weth Core]  STAGED DRAFT #9011 -> STATUS: PENDING_APPROVAL (Quarantine Active)
+[Action]     Open http://localhost:3002/signing to inspect payload and sign with MetaMask.`;
+
   return (
-    <div className="relative w-full min-h-screen overflow-x-hidden bg-white text-[#192837]" style={{ fontFamily: 'var(--font-body)' }}>
+    <div
+      className="relative w-full min-h-screen overflow-x-hidden bg-white text-[#192837]"
+      style={{ fontFamily: 'var(--font-body)' }}
+    >
       {/* FULLSCREEN HERO SECTION */}
       <section className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden">
-        {/* Background Video */}
+        {/* Background Video — 100% UNMODIFIED, NO FADE/TRANSPARENCY OVERLAYS */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
@@ -70,8 +105,6 @@ export default function LandingPage() {
           playsInline
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260518_003132_8b7edcb6-c64d-4a52-a9ca-879942e122ad.mp4"
         />
-        {/* Crisp Readability Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/80 to-white/40 backdrop-blur-[1px] z-0" />
 
         {/* NAVBAR */}
         <header className="relative z-10 max-w-[1280px] w-full mx-auto px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between">
@@ -117,7 +150,7 @@ export default function LandingPage() {
               href="http://localhost:3002/signing"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-full text-sm font-medium text-white transition-all hover:brightness-110"
+              className="px-5 py-2.5 rounded-full text-sm font-medium text-white transition-all hover:brightness-110 shadow-sm"
               style={{ background: '#7342E2' }}
             >
               Start For Free
@@ -150,7 +183,7 @@ export default function LandingPage() {
           style={{ paddingTop: 'clamp(40px, 8vw, 72px)', paddingBottom: '60px' }}
         >
           <div className="max-w-[560px]">
-            {/* HERO HEADING */}
+            {/* HERO HEADING tailored for Weth */}
             <motion.h1
               custom={0}
               initial="hidden"
@@ -168,17 +201,17 @@ export default function LandingPage() {
               <span className="inline-flex items-center align-middle relative -top-[2px] mr-1.5">
                 <Zap className="w-6 h-6 text-[#192837]" />
               </span>
-              Zero-Trust AI Agent Execution{' '}
+              Autonomous AI Agent Drafting{' '}
               <span className="inline-flex items-center align-middle relative -top-[2px] mx-1">
                 <LockKeyhole className="w-6 h-6 text-[#192837]" />
               </span>
-              with Ironclad Ethereum Security
+              with Zero-Trust Human Execution
               <span className="inline-flex items-center align-middle relative -top-[2px] ml-1.5">
                 <Fingerprint className="w-6 h-6 text-[#192837]" />
               </span>
             </motion.h1>
 
-            {/* HERO SUBTEXT */}
+            {/* HERO SUBTEXT tailored for Weth */}
             <motion.p
               custom={1}
               initial="hidden"
@@ -194,7 +227,7 @@ export default function LandingPage() {
                 marginBottom: '36px',
               }}
             >
-              Zero stress, total control. Weth keeps you covered with unbreakable Model Context Protocol drafting, human-in-the-loop signing, and pro-grade tools for your non-stop world.
+              The institutional-grade bridge between Large Language Models and Ethereum. Let AI assistants inspect balances, simulate gas, and draft transactions via MCP—while every single on-chain action stays locked behind your explicit cryptographic signature.
             </motion.p>
 
             {/* CTA BUTTON */}
@@ -224,15 +257,14 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Subtle Bottom Accent Gradient Bar */}
+        {/* Subtle Bottom Accent Line */}
         <div className="relative z-10 w-full h-1 bg-gradient-to-r from-[#7342E2] via-[#192837] to-transparent" />
       </section>
 
-      {/* MOBILE MENU SHEET (AnimatePresence + Framer Motion) */}
+      {/* MOBILE MENU SHEET */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -242,7 +274,6 @@ export default function LandingPage() {
               style={{ background: 'rgba(25, 40, 55, 0.35)', backdropFilter: 'blur(4px)' }}
             />
 
-            {/* Sheet */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
@@ -257,22 +288,8 @@ export default function LandingPage() {
               }}
             >
               <div>
-                {/* Header */}
                 <div className="flex items-center justify-between pb-4">
                   <div className="flex items-center gap-2.5">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="26"
-                      height="26"
-                      fill="none"
-                      overflow="visible"
-                      viewBox="0 0 256 256"
-                    >
-                      <path
-                        d="M 64 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 L 128 64 L 128 64.5 L 161 32 L 192 0 L 256 0 L 256 64 L 192 128 L 128 128 L 128 192 L 96 223 L 63.5 256 L 0 256 L 0 192 Z M 256 192 L 224 223 L 191.5 256 L 128 256 L 128 192 L 192 128 L 256 128 Z"
-                        fill="#192837"
-                      />
-                    </svg>
                     <span
                       className="text-xl font-bold text-[#192837]"
                       style={{ fontFamily: 'var(--font-heading)' }}
@@ -288,11 +305,7 @@ export default function LandingPage() {
                     <X className="w-6 h-6" />
                   </button>
                 </div>
-
-                {/* 1px Divider */}
                 <div className="w-full h-px bg-[#192837]/15 my-3" />
-
-                {/* Staggered Nav Links */}
                 <nav className="flex flex-col gap-5 pt-4">
                   {navLinks.map((link, idx) => (
                     <motion.a
@@ -310,7 +323,6 @@ export default function LandingPage() {
                 </nav>
               </div>
 
-              {/* Bottom CTA Buttons matching Desktop Style */}
               <div className="flex flex-col gap-3 pt-6 border-t border-[#192837]/15">
                 <a
                   href="http://localhost:3002/signing"
@@ -336,17 +348,187 @@ export default function LandingPage() {
         )}
       </AnimatePresence>
 
-      {/* TASTEFUL & CLEAN LOWER SECTION (Cohesive with Helvetica Now Bold + Inter) */}
+      {/* APPLE-STYLE / $10,000 INTERACTIVE TERMINAL & CODE SHOWCASE */}
+      <section id="code-showcase" className="py-24 bg-[#F8F9FA] border-b border-neutral-200">
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-8 space-y-12">
+          {/* Header */}
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7342E2]/10 text-[#7342E2] text-xs font-bold tracking-wide uppercase">
+              <Sparkles className="w-3.5 h-3.5" />
+              Developer Experience
+            </div>
+            <h2
+              className="text-3xl sm:text-5xl font-bold text-[#192837] tracking-tight"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              Engineered Like a Precision Instrument
+            </h2>
+            <p className="text-sm sm:text-base text-[#192837]/70 leading-relaxed">
+              Explore the exact commands to clone the monorepo, configure Claude Desktop MCP, and watch autonomous agent transaction drafting in action.
+            </p>
+          </div>
+
+          {/* Interactive Apple macOS Code Window Container */}
+          <div className="max-w-[1000px] mx-auto rounded-3xl overflow-hidden bg-[#0D1117] border border-neutral-800 shadow-[0_32px_80px_rgba(0,0,0,0.35)]">
+            {/* macOS Window Titlebar */}
+            <div className="px-5 py-4 bg-[#161B22] border-b border-neutral-800 flex items-center justify-between">
+              {/* Traffic Lights */}
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
+                <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
+                <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+              </div>
+
+              {/* Tab Selector */}
+              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#0D1117] border border-neutral-800">
+                <button
+                  onClick={() => setActiveTab('terminal')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === 'terminal'
+                      ? 'bg-[#7342E2] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <TerminalIcon className="w-3.5 h-3.5" />
+                  Terminal Setup
+                </button>
+                <button
+                  onClick={() => setActiveTab('mcp')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === 'mcp'
+                      ? 'bg-[#7342E2] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <FileJson className="w-3.5 h-3.5" />
+                  claude_desktop_config.json
+                </button>
+                <button
+                  onClick={() => setActiveTab('agent')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === 'agent'
+                      ? 'bg-[#7342E2] text-white shadow-sm'
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  <Play className="w-3.5 h-3.5" />
+                  AI Agent Session
+                </button>
+              </div>
+
+              {/* Copy Action Button */}
+              <button
+                onClick={() => {
+                  const textToCopy =
+                    activeTab === 'terminal'
+                      ? terminalCloneCode
+                      : activeTab === 'mcp'
+                      ? mcpJsonCode
+                      : agentSessionCode;
+                  copyText(activeTab, textToCopy);
+                }}
+                className="px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] border border-neutral-700 text-xs font-mono text-neutral-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+              >
+                {copiedStep === activeTab ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Snippet</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Code Body with Apple-Grade Syntax Styling */}
+            <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-[#0D1117] text-neutral-200">
+              {activeTab === 'terminal' && (
+                <pre className="space-y-3">
+                  <div>
+                    <span className="text-neutral-500"># 1. Clone the Weth zero-trust repository</span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-400 font-semibold">$ </span>
+                    <span className="text-white">git clone </span>
+                    <span className="text-cyan-400">https://github.com/ayushkumar2601/weth_wallet_devcon.git</span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-400 font-semibold">$ </span>
+                    <span className="text-white">cd weth_wallet_devcon</span>
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-neutral-500"># 2. Install workspace monorepo dependencies</span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-400 font-semibold">$ </span>
+                    <span className="text-white">pnpm install</span>
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-neutral-500"># 3. Launch local Weth Signing Console &amp; Core Backend</span>
+                  </div>
+                  <div>
+                    <span className="text-emerald-400 font-semibold">$ </span>
+                    <span className="text-white">pnpm dev</span>
+                  </div>
+                  <div className="pt-3 border-t border-neutral-800/80 text-emerald-400 font-semibold">
+                    &bull; Weth Signing Console live at http://localhost:3002
+                  </div>
+                </pre>
+              )}
+
+              {activeTab === 'mcp' && (
+                <pre className="text-neutral-300">
+                  <code>{mcpJsonCode}</code>
+                </pre>
+              )}
+
+              {activeTab === 'agent' && (
+                <pre className="space-y-3">
+                  <div className="text-neutral-400">
+                    <span className="text-purple-400 font-bold">&gt;</span> Prompting Claude: &ldquo;Check my Sepolia ETH balance and draft a 0.015 ETH transfer to vitalik.eth&rdquo;
+                  </div>
+                  <div className="text-cyan-300">
+                    [MCP Client] <span className="text-white">Executing tool:</span> get_balance(&#123; address: &quot;0x71C...E39a&quot; &#125;)
+                  </div>
+                  <div className="text-emerald-400">
+                    [Weth Core]  Returned: &#123; balance: &quot;1.4820 ETH&quot;, status: &quot;SAFE&quot; &#125;
+                  </div>
+                  <div className="pt-2 text-cyan-300">
+                    [MCP Client] <span className="text-white">Executing tool:</span> simulate_transaction(&#123; to: &quot;vitalik.eth&quot;, value: &quot;0.015 ETH&quot; &#125;)
+                  </div>
+                  <div className="text-emerald-400">
+                    [Weth Core]  Simulation SUCCESS. Gas Estimated: 21,000 | Fee: 0.00014 ETH
+                  </div>
+                  <div className="pt-2 text-cyan-300">
+                    [MCP Client] <span className="text-white">Executing tool:</span> create_transaction_draft(...)
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-200 font-semibold">
+                    [Weth Core] STAGED DRAFT #9011 &rarr; STATUS: PENDING_APPROVAL (Quarantine Active)
+                    <div className="text-xs font-normal text-purple-300/80 mt-1">
+                      Action Required: Open http://localhost:3002/signing to inspect payload and sign with MetaMask.
+                    </div>
+                  </div>
+                </pre>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CORE ARCHITECTURE SECTION */}
       <section id="features" className="py-24 max-w-[1280px] mx-auto px-5 sm:px-8 border-b border-neutral-200">
         <div className="space-y-3 mb-16">
           <p className="text-xs font-semibold tracking-widest uppercase text-[#7342E2]">
-            CORE ARCHITECTURE
+            SECURITY PARADIGM
           </p>
           <h2
             className="text-3xl sm:text-4xl font-bold text-[#192837]"
             style={{ fontFamily: 'var(--font-heading)' }}
           >
-            Engineered for Autonomous AI Precision
+            Why Zero-Trust Human-in-the-Loop?
           </h2>
         </div>
 
@@ -363,7 +545,7 @@ export default function LandingPage() {
               desc: 'Every staged draft waits in pending status until reviewed and explicitly signed by your cryptographic wallet extension.',
             },
             {
-              icon: Terminal,
+              icon: TerminalIcon,
               title: 'Automated Risk & Policy Guardrails',
               desc: 'Real-time policy engines enforce spending limits and alert you to unlimited spender allowances before signing.',
             },
@@ -372,7 +554,7 @@ export default function LandingPage() {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-2xl border border-neutral-200/80 bg-[#F2F2EE]/40 hover:bg-[#F2F2EE] transition-all space-y-4"
+                className="p-8 rounded-2xl border border-neutral-200/80 bg-[#F2F2EE]/40 hover:bg-[#F2F2EE] transition-all space-y-4 shadow-sm"
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#192837] text-white">
                   <Icon className="w-6 h-6" />
@@ -387,62 +569,6 @@ export default function LandingPage() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* SETUP & DOWNLOAD SECTION */}
-      <section id="download" className="py-24 max-w-[1000px] mx-auto px-5 sm:px-8">
-        <div className="space-y-3 mb-12 text-center">
-          <p className="text-xs font-semibold tracking-widest uppercase text-[#7342E2]">
-            QUICKSTART
-          </p>
-          <h2
-            className="text-3xl sm:text-4xl font-bold text-[#192837]"
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
-            Deploy Your Local MCP Server
-          </h2>
-        </div>
-
-        <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-[#F2F2EE] border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="text-sm font-bold text-[#192837]">Step 1: Clone Monorepo &amp; Install</div>
-              <div className="text-xs text-[#192837]/70 mt-1">
-                git clone https://github.com/ayushkumar2601/weth_wallet_devcon.git &amp;&amp; pnpm install
-              </div>
-            </div>
-            <button
-              onClick={() =>
-                copyText(
-                  'clone',
-                  'git clone https://github.com/ayushkumar2601/weth_wallet_devcon.git && cd weth_wallet_devcon && pnpm install'
-                )
-              }
-              className="px-4 py-2 rounded-full text-xs font-semibold text-white transition-transform active:scale-95 flex items-center gap-2 self-start sm:self-center"
-              style={{ background: '#192837' }}
-            >
-              {copiedStep === 'clone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              {copiedStep === 'clone' ? 'Copied' : 'Copy Command'}
-            </button>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-[#F2F2EE] border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="text-sm font-bold text-[#192837]">Step 2: Configure Claude Desktop Config</div>
-              <div className="text-xs text-[#192837]/70 mt-1">
-                Add Weth MCP Server JSON to ~/Library/Application Support/Claude/claude_desktop_config.json
-              </div>
-            </div>
-            <button
-              onClick={() => copyText('mcp', mcpSnippet)}
-              className="px-4 py-2 rounded-full text-xs font-semibold text-white transition-transform active:scale-95 flex items-center gap-2 self-start sm:self-center"
-              style={{ background: '#7342E2' }}
-            >
-              {copiedStep === 'mcp' ? <Check className="w-3.5 h-3.5 text-white" /> : <Copy className="w-3.5 h-3.5" />}
-              {copiedStep === 'mcp' ? 'Copied' : 'Copy JSON'}
-            </button>
-          </div>
         </div>
       </section>
 
