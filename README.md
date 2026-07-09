@@ -56,8 +56,8 @@
 ## 1. Executive Overview & Core Philosophy
 
 > **🎯 Target Buildathon Tracks:**
-> - **Primary Track: AI x Ethereum** — Architected specifically to connect autonomous Large Language Model agents (via standard Model Context Protocol) with secure Ethereum execution and zero-trust human-in-the-loop cryptographic signing.
-> - **Secondary Track: Infratooling (Infra & Tooling)** — Open-source developer infrastructure providing stdio JSON-RPC MCP servers, PostgreSQL transaction auditing, deterministic Zod policy guardrails, and automated gas simulation pipelines.
+> - **Track: AI x Ethereum** — Architected specifically to connect autonomous Large Language Model agents (via standard Model Context Protocol) with secure Ethereum execution and zero-trust human-in-the-loop cryptographic signing.
+> - **Track: Infratooling (Infra & Tooling)** — Open-source developer infrastructure providing stdio JSON-RPC MCP servers, PostgreSQL transaction auditing, deterministic Zod policy guardrails, and automated gas simulation pipelines.
 
 As Large Language Models (LLMs) and autonomous agents evolve from conversation assistants into actionable economic agents, their integration with blockchain networks becomes critical. However, granting direct private key custody to non-deterministic AI models introduces catastrophic financial risk.
 
