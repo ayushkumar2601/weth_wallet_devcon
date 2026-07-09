@@ -48,7 +48,7 @@ export default function LandingPage() {
       transition: {
         delay: custom * 0.15,
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       },
     }),
   };
@@ -278,7 +278,7 @@ pnpm dev`;
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
               className="fixed right-0 top-0 z-50 flex flex-col justify-between p-6"
               style={{
                 width: 'min(88vw, 360px)',
