@@ -21,9 +21,9 @@ export function Navigation() {
 
   return (
     <header className="w-full border-b border-neutral-200 dark:border-neutral-900 bg-background transition-colors">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-        {/* Top Left: Logo + Badge with Sharp Corners */}
-        <div className="flex items-center gap-6 xl:gap-8">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+        {/* Top Left: Logo + Badge + Navigation Links strictly on the same line */}
+        <div className="flex items-center gap-8 min-w-0 overflow-x-auto">
           <Link href="/dashboard" className="flex items-center gap-2.5 group shrink-0">
             <div className="w-8 h-8 rounded-none border border-neutral-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white">
               <Box className="w-4.5 h-4.5 stroke-[2.2]" />
@@ -36,8 +36,8 @@ export function Navigation() {
             </span>
           </Link>
 
-          {/* Navigation Links strictly on a single line */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+          {/* Navigation Links strictly on the same horizontal line as Weth */}
+          <nav className="flex items-center gap-6 shrink-0">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -81,26 +81,6 @@ export function Navigation() {
             <ConnectButton showBalance={false} />
           </div>
         </div>
-      </div>
-
-      {/* Tablet & Mobile navigation bar */}
-      <div className="lg:hidden flex overflow-x-auto px-6 py-2.5 gap-6 border-t border-neutral-200 dark:border-neutral-900">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-xs whitespace-nowrap font-medium pb-1 border-b-2 shrink-0 ${
-                isActive
-                  ? 'border-neutral-900 dark:border-white text-neutral-900 dark:text-white'
-                  : 'border-transparent text-neutral-500'
-              }`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
       </div>
     </header>
   );
