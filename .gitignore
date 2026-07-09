@@ -6,3 +6,5 @@ coverage
 .turbo
 *.log
 .DS_Store
+.next
+**/.next
