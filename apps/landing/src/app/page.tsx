@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Zap,
@@ -25,6 +25,19 @@ export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copiedStep, setCopiedStep] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'terminal' | 'mcp' | 'agent'>('terminal');
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setVideoModalOpen(false);
+      }
+    };
+    if (videoModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [videoModalOpen]);
 
   const copyText = (key: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -232,10 +245,9 @@ pnpm dev`;
 
             {/* CTA BUTTON */}
             <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}>
-              <motion.a
-                href="http://localhost:3002/signing"
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.button
+                type="button"
+                onClick={() => setVideoModalOpen(true)}
                 whileHover={{ scale: 1.04, filter: 'brightness(1.1)' }}
                 whileTap={{ scale: 0.96 }}
                 className="inline-flex items-center justify-between font-semibold text-white transition-all cursor-pointer"
@@ -250,9 +262,9 @@ pnpm dev`;
                   gap: '32px',
                 }}
               >
-                <span>Launch Signing Console</span>
-                <ArrowRightCircle className="w-5 h-5 shrink-0" />
-              </motion.a>
+                <span>Watch Video Demo</span>
+                <Play className="w-5 h-5 shrink-0 fill-current" />
+              </motion.button>
             </motion.div>
           </div>
         </div>
@@ -719,6 +731,61 @@ pnpm dev`;
           </div>
         </div>
       </footer>
+
+      {/* VIDEO DEMO MODAL */}
+      <AnimatePresence>
+        {videoModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setVideoModalOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10"
+            style={{
+              background: 'rgba(15, 23, 42, 0.85)',
+              backdropFilter: 'blur(12px)',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0, y: 16 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.94, opacity: 0, y: 16 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl overflow-hidden shadow-2xl rounded-2xl border border-white/15 bg-[#192837]"
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#192837]">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-3 h-3 rounded-full bg-[#7342E2]" />
+                  <span className="text-sm font-semibold text-white tracking-wide">
+                    Weth Video Demonstration
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setVideoModalOpen(false)}
+                  className="p-1.5 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  aria-label="Close video demo"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Video Container */}
+              <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+                <iframe
+                  src="https://www.youtube.com/embed/jO91JiECPEw?autoplay=1&rel=0"
+                  title="Weth Video Demonstration"
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
