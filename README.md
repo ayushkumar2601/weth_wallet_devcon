@@ -454,5 +454,5 @@ This ensures complete institutional compliance and reproducibility: security tea
 
 <div align="center">
   <p>Built with precision for High-Assurance AI + Blockchain Infrastructure.</p>
-  <p><b>WETH Team © 2026</b></p>
+  <p><b>Made by Ayush with ❤️</b></p>
 </div>
