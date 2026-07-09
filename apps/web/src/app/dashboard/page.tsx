@@ -2,7 +2,7 @@
 
 import { useAccount } from 'wagmi';
 import { useWalletData } from '../../hooks/useWalletData';
-import { Activity, Coins, FileCheck2, AlertTriangle, ArrowRight, ShieldAlert } from 'lucide-react';
+import { Activity, ShieldCheck, ArrowRight, Wallet } from 'lucide-react';
 import Link from 'next/link';
 import { PendingTransactions } from '../../components/PendingTransactions';
 
@@ -13,105 +13,109 @@ export default function DashboardPage() {
 
   if (!isConnected) {
     return (
-      <div className="h-full flex items-center justify-center flex-col text-center p-8">
-        <div className="w-24 h-24 bg-zinc-900 rounded-full flex items-center justify-center mb-6 border border-zinc-800">
-          <Activity size={32} className="text-zinc-500" />
+      <div className="py-20 flex flex-col items-center justify-center text-center">
+        <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-900 rounded-2xl flex items-center justify-center mb-6 border border-neutral-200 dark:border-neutral-800">
+          <Wallet className="w-7 h-7 text-neutral-600 dark:text-neutral-400" />
         </div>
-        <h2 className="text-2xl font-bold text-zinc-100 mb-2">Connect Your Wallet</h2>
-        <p className="text-zinc-400 max-w-md">
-          Please connect your MetaMask or compatible wallet to view your Sepolia portfolio, analyze risk, and draft secure transactions.
+        <h2 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white mb-2">
+          Connect Your Wallet
+        </h2>
+        <p className="text-sm text-neutral-500 max-w-md mb-6">
+          Connect your MetaMask or compatible Ethereum wallet to inspect AI agent transactions, manage approvals, and sign pending drafts.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-zinc-100">Overview</h2>
-        <p className="text-zinc-400 mt-1">Address: {address}</p>
+    <div className="space-y-8">
+      {/* Top Header Section */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-200 dark:border-neutral-900 pb-5">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            Overview
+          </h1>
+          <p className="text-xs font-mono text-neutral-500 mt-1">
+            Connected: {address}
+          </p>
+        </div>
+
+        <Link
+          href="/signing"
+          className="inline-flex items-center gap-2 bg-neutral-900 text-white dark:bg-white dark:text-black px-4 py-2 rounded-lg font-medium text-xs hover:opacity-90 transition-opacity"
+        >
+          Open Signing &amp; Wallets
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
+      {/* Pending Human-in-the-Loop Signing Queue */}
       <PendingTransactions />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Coins size={64} />
-          </div>
-          <p className="text-sm font-medium text-zinc-400 mb-2">ETH Balance</p>
-          <div className="text-4xl font-bold text-zinc-100">
-            {isLoading ? '...' : (summary?.ethBalance || '0')}
-            <span className="text-lg text-zinc-500 ml-2">ETH</span>
+      {/* Monochrome Overview Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl">
+          <p className="text-xs font-medium text-neutral-500 mb-2">ETH Balance</p>
+          <div className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            {isLoading ? '...' : summary?.ethBalance || '0.00'}
+            <span className="text-sm font-normal text-neutral-500 ml-1.5">ETH</span>
           </div>
         </div>
 
-        <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <FileCheck2 size={64} />
-          </div>
-          <p className="text-sm font-medium text-zinc-400 mb-2">ERC20 Tokens</p>
-          <div className="text-4xl font-bold text-zinc-100">
-            {isLoading ? '...' : (summary?.tokenCount || '0')}
-            <span className="text-lg text-zinc-500 ml-2">Assets</span>
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl">
+          <p className="text-xs font-medium text-neutral-500 mb-2">ERC20 Assets</p>
+          <div className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            {isLoading ? '...' : summary?.tokenCount || '0'}
+            <span className="text-sm font-normal text-neutral-500 ml-1.5">Tokens</span>
           </div>
         </div>
 
-        <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Activity size={64} />
-          </div>
-          <p className="text-sm font-medium text-zinc-400 mb-2">Recent Activity</p>
-          <div className="text-4xl font-bold text-zinc-100">
-            {isLoading ? '...' : (summary?.recentActivity || '0')}
-            <span className="text-lg text-zinc-500 ml-2">Txs</span>
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl">
+          <p className="text-xs font-medium text-neutral-500 mb-2">Recent Execution Count</p>
+          <div className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            {isLoading ? '...' : summary?.recentActivity || '0'}
+            <span className="text-sm font-normal text-neutral-500 ml-1.5">Txs</span>
           </div>
         </div>
       </div>
 
+      {/* Analytics & Insights in tasteful monochrome */}
       {analytics && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-blue-500/5 border border-blue-500/20 p-6 rounded-xl">
-            <h3 className="text-lg font-bold text-blue-400 flex items-center gap-2 mb-4">
-              <ShieldAlert size={20} />
-              Portfolio Insights
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl space-y-4">
+            <h3 className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-neutral-500" />
+              Agent Risk Assessment
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {analytics.insights?.map((insight: string, i: number) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-zinc-300">
-                  <ArrowRight size={16} className="text-blue-500 mt-0.5 shrink-0" />
+                <li key={i} className="flex items-start gap-2 text-xs text-neutral-600 dark:text-neutral-300">
+                  <span className="text-neutral-400">&bull;</span>
                   {insight}
                 </li>
               ))}
             </ul>
           </div>
-          
-          <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl flex flex-col justify-center gap-6">
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-zinc-400">Risk Level</span>
-                <span className={`font-bold ${analytics.riskLevel === 'HIGH' ? 'text-red-400' : analytics.riskLevel === 'MEDIUM' ? 'text-yellow-400' : 'text-emerald-400'}`}>
-                  {analytics.riskLevel}
-                </span>
-              </div>
-              <div className="w-full bg-zinc-800 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${Math.min(100, analytics.riskScore)}%` }}></div>
-              </div>
+
+          <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl flex flex-col justify-center space-y-4">
+            <div className="flex justify-between items-center text-xs">
+              <span className="font-medium text-neutral-500">Security Concentration Risk</span>
+              <span className="font-mono font-bold text-neutral-900 dark:text-white">
+                {analytics.riskLevel}
+              </span>
             </div>
-            
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-zinc-400">Diversification</span>
-                <span className="font-bold text-zinc-100">{analytics.diversificationLevel}</span>
-              </div>
-              <div className="w-full bg-zinc-800 rounded-full h-2">
-                <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${Math.min(100, analytics.diversificationScore)}%` }}></div>
-              </div>
+            <div className="w-full bg-neutral-100 dark:bg-neutral-900 rounded-full h-1.5">
+              <div
+                className="bg-neutral-900 dark:bg-white h-1.5 rounded-full transition-all"
+                style={{ width: `${Math.min(100, analytics.riskScore || 20)}%` }}
+              />
             </div>
+            <p className="text-xs text-neutral-500">
+              Zero-trust policy enforcement active. Only explicit red-button human signatures can commit transactions.
+            </p>
           </div>
         </div>
       )}
     </div>
   );
 }
-// Note: ShieldAlert import will error if missing, let's fix it by adding ShieldAlert.

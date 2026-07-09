@@ -1,13 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
-import { Check, X, Loader2, Send } from 'lucide-react';
-import { parseEther } from 'viem';
+import { useAccount, useSendTransaction } from 'wagmi';
+import { Check, Loader2, AlertCircle } from 'lucide-react';
 
 export function PendingTransactions() {
   const { address, isConnected } = useAccount();
   const { sendTransactionAsync, isPending: isSigning } = useSendTransaction();
+  const [approvedIds, setApprovedIds] = useState<Record<string, string>>({});
 
   const { data: drafts, refetch } = useQuery({
     queryKey: ['pending-drafts', address],
@@ -21,24 +22,27 @@ export function PendingTransactions() {
   });
 
   const broadcastMutation = useMutation({
-    mutationFn: async ({ draftId, hash }: { draftId: string, hash: string }) => {
+    mutationFn: async ({ draftId, hash }: { draftId: string; hash: string }) => {
       const res = await fetch('http://localhost:3000/transactions/broadcast', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ draftId, signedTransaction: hash })
+        body: JSON.stringify({ draftId, signedTransaction: hash }),
       });
       if (!res.ok) throw new Error('Broadcast failed');
       return res.json();
     },
-    onSuccess: () => refetch()
+    onSuccess: (_, variables) => {
+      setApprovedIds((prev) => ({ ...prev, [variables.draftId]: variables.hash }));
+      refetch();
+    },
   });
 
   const handleSign = async (draft: any) => {
     try {
       const hash = await sendTransactionAsync({
         to: draft.toAddress as `0x${string}`,
-        value: BigInt(draft.value || '0'), 
-        data: (draft.data && draft.data !== '0x') ? draft.data as `0x${string}` : undefined
+        value: BigInt(draft.value || '0'),
+        data: draft.data && draft.data !== '0x' ? (draft.data as `0x${string}`) : undefined,
       });
       await broadcastMutation.mutateAsync({ draftId: draft.id, hash });
     } catch (err) {
@@ -46,35 +50,68 @@ export function PendingTransactions() {
     }
   };
 
-  if (!drafts || drafts.length === 0) return null;
+  if (!drafts || drafts.length === 0) {
+    return null;
+  }
 
   return (
-    <div className="mt-8 space-y-4">
-      <h3 className="text-xl font-bold text-zinc-100 flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-        Action Required: Pending Approvals
-      </h3>
-      
-      {drafts.map((draft: any) => (
-        <div key={draft.id} className="bg-blue-500/10 border border-blue-500/30 p-5 rounded-xl flex items-center justify-between">
-          <div>
-            <div className="text-sm text-blue-400 font-medium mb-1">AI Draft Ready for Signing</div>
-            <div className="text-zinc-100 font-bold">
-              Send {draft.value} Wei to {draft.toAddress.slice(0,6)}...{draft.toAddress.slice(-4)}
+    <div className="space-y-4 pt-2">
+      <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-900 pb-3">
+        <h3 className="text-base font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
+          Pending Signing Requests
+        </h3>
+        <span className="text-xs text-neutral-500">Requires human signature</span>
+      </div>
+
+      <div className="space-y-3">
+        {drafts.map((draft: any) => {
+          const isApproved = !!approvedIds[draft.id] || draft.status === 'APPROVED';
+
+          return (
+            <div
+              key={draft.id}
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
+              <div className="space-y-1">
+                <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                  ID: {draft.id}
+                </div>
+                <div className="text-sm font-medium text-neutral-900 dark:text-white">
+                  Transfer {draft.value} Wei &rarr;{' '}
+                  <span className="font-mono text-xs">
+                    {draft.toAddress?.slice(0, 8)}...{draft.toAddress?.slice(-6)}
+                  </span>
+                </div>
+                <div className="text-xs text-neutral-500">
+                  Drafted by AI Agent via MCP protocol
+                </div>
+              </div>
+
+              <div className="shrink-0">
+                {isApproved ? (
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
+                    <Check size={14} />
+                    Sign Approved
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => handleSign(draft)}
+                    disabled={isSigning || broadcastMutation.isPending}
+                    className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    {isSigning || broadcastMutation.isPending ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <AlertCircle size={14} />
+                    )}
+                    Approve &amp; Sign
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="text-xs text-zinc-500 mt-1 font-mono">{draft.id}</div>
-          </div>
-          
-          <button 
-            onClick={() => handleSign(draft)}
-            disabled={isSigning || broadcastMutation.isPending}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors disabled:opacity-50"
-          >
-            {(isSigning || broadcastMutation.isPending) ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-            Sign & Broadcast
-          </button>
-        </div>
-      ))}
+          );
+        })}
+      </div>
     </div>
   );
 }

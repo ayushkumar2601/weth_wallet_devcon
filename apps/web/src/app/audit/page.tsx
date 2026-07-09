@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { Activity, Fingerprint } from 'lucide-react';
 
 export default function AuditPage() {
   const { data, isLoading } = useQuery({
@@ -15,47 +14,54 @@ export default function AuditPage() {
   });
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-zinc-100">Audit Logs</h2>
-        <p className="text-zinc-400 mt-1">Immutable system execution trace</p>
+    <div className="space-y-6">
+      <div className="border-b border-neutral-200 dark:border-neutral-900 pb-4">
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          Audit Logs
+        </h1>
+        <p className="text-xs text-neutral-500 mt-1">
+          Immutable execution trace of MCP agent tools and human approvals
+        </p>
       </div>
 
       {isLoading ? (
-        <div className="text-zinc-500">Loading audit trail...</div>
+        <div className="py-12 text-center text-xs text-neutral-500">Loading audit trail...</div>
       ) : (
-        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-zinc-800/50 text-zinc-400">
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-xl overflow-hidden">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-neutral-100 dark:bg-neutral-900 text-neutral-500 font-mono border-b border-neutral-200 dark:border-neutral-800">
               <tr>
                 <th className="p-4 font-medium">Timestamp</th>
                 <th className="p-4 font-medium">Tool Execution</th>
                 <th className="p-4 font-medium">Draft ID</th>
-                <th className="p-4 font-medium">Trace Payload</th>
+                <th className="p-4 font-medium">Payload Trace</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
-              {data?.length === 0 && (
+            <tbody className="divide-y divide-neutral-200 dark:divide-neutral-900">
+              {(!data || data.length === 0) && (
                 <tr>
-                  <td colSpan={4} className="p-8 text-center text-zinc-500">No logs found</td>
+                  <td colSpan={4} className="p-8 text-center text-neutral-500">
+                    No execution logs recorded yet
+                  </td>
                 </tr>
               )}
+
               {data?.map((log: any) => (
-                <tr key={log.id} className="hover:bg-zinc-800/20 transition-colors">
-                  <td className="p-4 text-zinc-400 whitespace-nowrap">
+                <tr
+                  key={log.id}
+                  className="hover:bg-neutral-50 dark:hover:bg-neutral-900/40 transition-colors"
+                >
+                  <td className="p-4 font-mono text-neutral-500 whitespace-nowrap">
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
                   <td className="p-4">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 font-medium text-xs">
-                      <Activity size={12} />
+                    <span className="inline-block px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-900 font-mono font-medium text-[11px] text-neutral-800 dark:text-neutral-200">
                       {log.toolName}
                     </span>
                   </td>
-                  <td className="p-4 text-zinc-500 font-mono text-xs">
-                    {log.transactionId || 'N/A'}
-                  </td>
+                  <td className="p-4 font-mono text-neutral-500">{log.transactionId || 'N/A'}</td>
                   <td className="p-4 max-w-xs truncate">
-                    <pre className="text-xs text-zinc-500 truncate" title={JSON.stringify(log.requestPayload)}>
+                    <pre className="font-mono text-[11px] text-neutral-500 truncate">
                       {JSON.stringify(log.requestPayload)}
                     </pre>
                   </td>

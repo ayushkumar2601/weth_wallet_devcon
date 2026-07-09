@@ -3,50 +3,105 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Briefcase, History, ShieldAlert, List } from 'lucide-react';
+import { Box, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export function Navigation() {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
-  const links = [
-    { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-    { href: '/portfolio', label: 'Portfolio', icon: Briefcase },
-    { href: '/transactions', label: 'History', icon: History },
-    { href: '/audit', label: 'Audit Logs', icon: List },
-    { href: '/risk', label: 'Risk Center', icon: ShieldAlert },
+  const navItems = [
+    { href: '/dashboard', label: 'Overview' },
+    { href: '/signing', label: 'Signing & Wallets' },
+    { href: '/portfolio', label: 'Portfolio' },
+    { href: '/transactions', label: 'History' },
+    { href: '/risk', label: 'Risk Center' },
+    { href: '/audit', label: 'Audit Logs' },
   ];
 
   return (
-    <div className="w-64 bg-zinc-900 border-r border-zinc-800 h-full p-4 flex flex-col">
-      <div className="mb-8 p-2">
-        <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">WETH</h1>
-        <p className="text-xs text-zinc-500 mt-1">MCP Intelligence</p>
+    <header className="w-full border-b border-neutral-200 dark:border-neutral-900 bg-background transition-colors">
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Top Left: Logo + Badge */}
+        <div className="flex items-center gap-8">
+          <Link href="/dashboard" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg border border-neutral-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white">
+              <Box className="w-4.5 h-4.5 stroke-[2.2]" />
+            </div>
+            <span className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              Weth
+            </span>
+            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300">
+              v1.1
+            </span>
+          </Link>
+
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center gap-6">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm font-medium pb-1 border-b-2 transition-all ${
+                    isActive
+                      ? 'border-neutral-900 dark:border-white text-neutral-900 dark:text-white'
+                      : 'border-transparent text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Top Right: Theme Toggle + Connect Wallet */}
+        <div className="flex items-center gap-5">
+          {/* Theme Switch exactly matching Kosh v1.3 inspiration */}
+          <div className="flex items-center gap-2.5 text-neutral-600 dark:text-neutral-400">
+            <Sun className="w-4 h-4" />
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="w-11 h-6 rounded-full bg-neutral-300 dark:bg-neutral-800 p-0.5 relative transition-colors focus:outline-none border border-neutral-400/30 dark:border-neutral-700"
+              aria-label="Toggle theme"
+            >
+              <span
+                className={`block w-4.5 h-4.5 rounded-full bg-white dark:bg-neutral-200 transition-transform ${
+                  theme === 'dark' ? 'translate-x-5' : 'translate-x-0'
+                } shadow-sm`}
+              />
+            </button>
+            <Moon className="w-4 h-4" />
+          </div>
+
+          <div className="scale-95">
+            <ConnectButton showBalance={false} />
+          </div>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-1">
-        {links.map((link) => {
-          const Icon = link.icon;
-          const isActive = pathname === link.href;
+      {/* Mobile navigation bar */}
+      <div className="md:hidden flex overflow-x-auto px-6 py-2 gap-4 border-t border-neutral-200 dark:border-neutral-900">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href;
           return (
             <Link
-              key={link.href}
-              href={link.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
-                isActive 
-                  ? 'bg-blue-500/10 text-blue-400' 
-                  : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50'
+              key={item.href}
+              href={item.href}
+              className={`text-xs whitespace-nowrap font-medium pb-1 border-b-2 ${
+                isActive
+                  ? 'border-neutral-900 dark:border-white text-neutral-900 dark:text-white'
+                  : 'border-transparent text-neutral-500'
               }`}
             >
-              <Icon size={18} />
-              <span className="font-medium text-sm">{link.label}</span>
+              {item.label}
             </Link>
           );
         })}
-      </nav>
-
-      <div className="mt-auto">
-        <ConnectButton showBalance={false} />
       </div>
-    </div>
+    </header>
   );
 }

@@ -2,41 +2,54 @@
 
 import { useAccount } from 'wagmi';
 import { useWalletData } from '../../hooks/useWalletData';
-import { Coins, CircleDollarSign } from 'lucide-react';
+import { CircleDollarSign } from 'lucide-react';
 
 export default function PortfolioPage() {
   const { isConnected } = useAccount();
   const { data, isLoading } = useWalletData('/tokens');
 
   if (!isConnected) {
-    return <div className="p-8">Connect your wallet to view your portfolio.</div>;
+    return (
+      <div className="py-20 text-center text-sm text-neutral-500">
+        Connect your wallet to view your portfolio.
+      </div>
+    );
   }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto space-y-8">
-      <div>
-        <h2 className="text-3xl font-bold text-zinc-100">Asset Portfolio</h2>
-        <p className="text-zinc-400 mt-1">Your Sepolia ERC20 balances</p>
+    <div className="space-y-6">
+      <div className="border-b border-neutral-200 dark:border-neutral-900 pb-4">
+        <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+          Asset Portfolio
+        </h1>
+        <p className="text-xs text-neutral-500 mt-1">
+          Verified Sepolia token balances read via zero-trust indexer
+        </p>
       </div>
 
       {isLoading ? (
-        <div className="text-zinc-500">Loading assets...</div>
+        <div className="py-12 text-center text-xs text-neutral-500">Loading token balances...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data?.tokens?.length === 0 && (
-            <div className="col-span-full p-8 border border-zinc-800 border-dashed rounded-xl text-center text-zinc-500">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {(!data?.tokens || data.tokens.length === 0) && (
+            <div className="col-span-full py-12 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-xl text-center text-xs text-neutral-500">
               No ERC20 tokens found in this wallet.
             </div>
           )}
-          
+
           {data?.tokens?.map((token: any, i: number) => (
-            <div key={i} className="bg-zinc-900/50 border border-zinc-800 p-5 rounded-xl flex items-center gap-4">
-              <div className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center shrink-0">
-                <CircleDollarSign className="text-zinc-400" />
+            <div
+              key={i}
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-xl flex items-center gap-4"
+            >
+              <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-900 rounded-lg flex items-center justify-center shrink-0">
+                <CircleDollarSign className="w-4 h-4 text-neutral-600 dark:text-neutral-400" />
               </div>
-              <div className="overflow-hidden">
-                <div className="text-xs text-zinc-500 truncate mb-1">{token.contractAddress}</div>
-                <div className="text-xl font-bold text-zinc-100 truncate" title={token.rawBalance}>
+              <div className="overflow-hidden min-w-0">
+                <div className="text-xs font-mono text-neutral-500 truncate mb-0.5">
+                  {token.contractAddress}
+                </div>
+                <div className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white truncate">
                   {token.rawBalance}
                 </div>
               </div>
