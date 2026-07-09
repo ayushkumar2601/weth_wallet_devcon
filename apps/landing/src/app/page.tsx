@@ -348,175 +348,296 @@ pnpm dev`;
         )}
       </AnimatePresence>
 
-      {/* APPLE-STYLE / $10,000 INTERACTIVE TERMINAL & CODE SHOWCASE */}
-      <section id="code-showcase" className="py-24 bg-[#F8F9FA] border-b border-neutral-200">
-        <div className="max-w-[1200px] mx-auto px-5 sm:px-8 space-y-12">
-          {/* Header */}
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7342E2]/10 text-[#7342E2] text-xs font-bold tracking-wide uppercase">
-              <Sparkles className="w-3.5 h-3.5" />
-              Developer Experience
+      {/* APPLE-STYLE / $10,000 STACKED INTERACTIVE SHOWCASE SECTIONS */}
+      <div id="code-showcase" className="bg-[#F8F9FA] border-b border-neutral-200 divide-y divide-neutral-200/80">
+        {/* SECTION 1: CODE LEFT (7 cols), TEXT RIGHT (5 cols) — TERMINAL SETUP */}
+        <section className="py-24 sm:py-32 max-w-[1280px] mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Apple macOS Terminal Window */}
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#0D1117] border border-neutral-800 shadow-[0_32px_80px_rgba(0,0,0,0.30)]">
+              {/* Window Titlebar */}
+              <div className="px-5 py-4 bg-[#161B22] border-b border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                  <TerminalIcon className="w-3.5 h-3.5 text-[#7342E2]" />
+                  <span>Terminal &mdash; zsh</span>
+                </div>
+                <button
+                  onClick={() => copyText('terminal', terminalCloneCode)}
+                  className="px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] border border-neutral-700 text-xs font-mono text-neutral-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  {copiedStep === 'terminal' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy Snippet</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Window Code Content */}
+              <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-neutral-200 space-y-3">
+                <div>
+                  <span className="text-neutral-500"># 1. Clone the Weth zero-trust repository</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400 font-semibold">$ </span>
+                  <span className="text-white">git clone </span>
+                  <span className="text-cyan-400">https://github.com/ayushkumar2601/weth_wallet_devcon.git</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400 font-semibold">$ </span>
+                  <span className="text-white">cd weth_wallet_devcon</span>
+                </div>
+                <div className="pt-2">
+                  <span className="text-neutral-500"># 2. Install workspace monorepo dependencies</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400 font-semibold">$ </span>
+                  <span className="text-white">pnpm install</span>
+                </div>
+                <div className="pt-2">
+                  <span className="text-neutral-500"># 3. Launch local Weth Signing Console &amp; Core Backend</span>
+                </div>
+                <div>
+                  <span className="text-emerald-400 font-semibold">$ </span>
+                  <span className="text-white">pnpm dev</span>
+                </div>
+                <div className="pt-3 border-t border-neutral-800/80 text-emerald-400 font-semibold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Weth Signing Console live at http://localhost:3002</span>
+                </div>
+              </div>
             </div>
-            <h2
-              className="text-3xl sm:text-5xl font-bold text-[#192837] tracking-tight"
-              style={{ fontFamily: 'var(--font-heading)' }}
-            >
-              Engineered Like a Precision Instrument
-            </h2>
-            <p className="text-sm sm:text-base text-[#192837]/70 leading-relaxed">
-              Explore the exact commands to clone the monorepo, configure Claude Desktop MCP, and watch autonomous agent transaction drafting in action.
-            </p>
-          </div>
 
-          {/* Interactive Apple macOS Code Window Container */}
-          <div className="max-w-[1000px] mx-auto rounded-3xl overflow-hidden bg-[#0D1117] border border-neutral-800 shadow-[0_32px_80px_rgba(0,0,0,0.35)]">
-            {/* macOS Window Titlebar */}
-            <div className="px-5 py-4 bg-[#161B22] border-b border-neutral-800 flex items-center justify-between">
-              {/* Traffic Lights */}
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
-                <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
-                <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+            {/* Right Column: Editorial Copy */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7342E2]/10 text-[#7342E2] text-xs font-bold tracking-wide uppercase">
+                01 / DEPLOYMENT
               </div>
-
-              {/* Tab Selector */}
-              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#0D1117] border border-neutral-800">
-                <button
-                  onClick={() => setActiveTab('terminal')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === 'terminal'
-                      ? 'bg-[#7342E2] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <TerminalIcon className="w-3.5 h-3.5" />
-                  Terminal Setup
-                </button>
-                <button
-                  onClick={() => setActiveTab('mcp')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === 'mcp'
-                      ? 'bg-[#7342E2] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <FileJson className="w-3.5 h-3.5" />
-                  claude_desktop_config.json
-                </button>
-                <button
-                  onClick={() => setActiveTab('agent')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === 'agent'
-                      ? 'bg-[#7342E2] text-white shadow-sm'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  <Play className="w-3.5 h-3.5" />
-                  AI Agent Session
-                </button>
-              </div>
-
-              {/* Copy Action Button */}
-              <button
-                onClick={() => {
-                  const textToCopy =
-                    activeTab === 'terminal'
-                      ? terminalCloneCode
-                      : activeTab === 'mcp'
-                      ? mcpJsonCode
-                      : agentSessionCode;
-                  copyText(activeTab, textToCopy);
-                }}
-                className="px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] border border-neutral-700 text-xs font-mono text-neutral-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-[#192837] tracking-tight leading-tight"
+                style={{ fontFamily: 'var(--font-heading)' }}
               >
-                {copiedStep === activeTab ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400">Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copy Snippet</span>
-                  </>
-                )}
-              </button>
+                Instant Monorepo Deployment.
+              </h2>
+              <p className="text-sm sm:text-base text-[#192837]/75 leading-relaxed">
+                Engineered as a high-performance Turborepo workspace. One single terminal command installs all dependencies and concurrently boots the zero-trust desktop signing console, API gateway, and local MCP server.
+              </p>
+              <ul className="space-y-3 text-sm font-medium text-[#192837]/85 pt-2">
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Zero-config Turborepo monorepo structure
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Dedicated Next.js Signing Console on port 3002
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Built-in Ethereum Sepolia testnet readiness
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: TEXT LEFT (5 cols), CODE RIGHT (7 cols) — CLAUDE DESKTOP / CURSOR MCP */}
+        <section className="py-24 sm:py-32 max-w-[1280px] mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Editorial Copy */}
+            <div className="lg:col-span-5 space-y-6 order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7342E2]/10 text-[#7342E2] text-xs font-bold tracking-wide uppercase">
+                02 / MCP INTEGRATION
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-[#192837] tracking-tight leading-tight"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                Native Model Context Protocol.
+              </h2>
+              <p className="text-sm sm:text-base text-[#192837]/75 leading-relaxed">
+                Connect Weth directly to Claude Desktop or Cursor in seconds. Give your Large Language Model assistants deterministic, read-only tools to inspect balances and stage transactions over standard stdio pipes.
+              </p>
+              <ul className="space-y-3 text-sm font-medium text-[#192837]/85 pt-2">
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Standard stdio JSON-RPC transport specification
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Isolated ERC-20 read &amp; gas simulation tools
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Strict runtime input validation powered by Zod
+                </li>
+              </ul>
             </div>
 
-            {/* Code Body with Apple-Grade Syntax Styling */}
-            <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto bg-[#0D1117] text-neutral-200">
-              {activeTab === 'terminal' && (
-                <pre className="space-y-3">
-                  <div>
-                    <span className="text-neutral-500"># 1. Clone the Weth zero-trust repository</span>
-                  </div>
-                  <div>
-                    <span className="text-emerald-400 font-semibold">$ </span>
-                    <span className="text-white">git clone </span>
-                    <span className="text-cyan-400">https://github.com/ayushkumar2601/weth_wallet_devcon.git</span>
-                  </div>
-                  <div>
-                    <span className="text-emerald-400 font-semibold">$ </span>
-                    <span className="text-white">cd weth_wallet_devcon</span>
-                  </div>
-                  <div className="pt-2">
-                    <span className="text-neutral-500"># 2. Install workspace monorepo dependencies</span>
-                  </div>
-                  <div>
-                    <span className="text-emerald-400 font-semibold">$ </span>
-                    <span className="text-white">pnpm install</span>
-                  </div>
-                  <div className="pt-2">
-                    <span className="text-neutral-500"># 3. Launch local Weth Signing Console &amp; Core Backend</span>
-                  </div>
-                  <div>
-                    <span className="text-emerald-400 font-semibold">$ </span>
-                    <span className="text-white">pnpm dev</span>
-                  </div>
-                  <div className="pt-3 border-t border-neutral-800/80 text-emerald-400 font-semibold">
-                    &bull; Weth Signing Console live at http://localhost:3002
-                  </div>
-                </pre>
-              )}
+            {/* Right Column: Apple macOS JSON Editor Window */}
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#0D1117] border border-neutral-800 shadow-[0_32px_80px_rgba(0,0,0,0.30)] order-1 lg:order-2">
+              {/* Window Titlebar */}
+              <div className="px-5 py-4 bg-[#161B22] border-b border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                  <FileJson className="w-3.5 h-3.5 text-[#7342E2]" />
+                  <span>claude_desktop_config.json</span>
+                </div>
+                <button
+                  onClick={() => copyText('mcp', mcpJsonCode)}
+                  className="px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] border border-neutral-700 text-xs font-mono text-neutral-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  {copiedStep === 'mcp' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy Snippet</span>
+                    </>
+                  )}
+                </button>
+              </div>
 
-              {activeTab === 'mcp' && (
-                <pre className="text-neutral-300">
+              {/* Window Code Content */}
+              <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-neutral-300">
+                <pre>
                   <code>{mcpJsonCode}</code>
                 </pre>
-              )}
-
-              {activeTab === 'agent' && (
-                <pre className="space-y-3">
-                  <div className="text-neutral-400">
-                    <span className="text-purple-400 font-bold">&gt;</span> Prompting Claude: &ldquo;Check my Sepolia ETH balance and draft a 0.015 ETH transfer to vitalik.eth&rdquo;
-                  </div>
-                  <div className="text-cyan-300">
-                    [MCP Client] <span className="text-white">Executing tool:</span> get_balance(&#123; address: &quot;0x71C...E39a&quot; &#125;)
-                  </div>
-                  <div className="text-emerald-400">
-                    [Weth Core]  Returned: &#123; balance: &quot;1.4820 ETH&quot;, status: &quot;SAFE&quot; &#125;
-                  </div>
-                  <div className="pt-2 text-cyan-300">
-                    [MCP Client] <span className="text-white">Executing tool:</span> simulate_transaction(&#123; to: &quot;vitalik.eth&quot;, value: &quot;0.015 ETH&quot; &#125;)
-                  </div>
-                  <div className="text-emerald-400">
-                    [Weth Core]  Simulation SUCCESS. Gas Estimated: 21,000 | Fee: 0.00014 ETH
-                  </div>
-                  <div className="pt-2 text-cyan-300">
-                    [MCP Client] <span className="text-white">Executing tool:</span> create_transaction_draft(...)
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-200 font-semibold">
-                    [Weth Core] STAGED DRAFT #9011 &rarr; STATUS: PENDING_APPROVAL (Quarantine Active)
-                    <div className="text-xs font-normal text-purple-300/80 mt-1">
-                      Action Required: Open http://localhost:3002/signing to inspect payload and sign with MetaMask.
-                    </div>
-                  </div>
-                </pre>
-              )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* SECTION 3: CODE LEFT (7 cols), TEXT RIGHT (5 cols) — ZERO-TRUST AGENT QUARANTINE */}
+        <section className="py-24 sm:py-32 max-w-[1280px] mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column: Apple macOS Agent Execution Window */}
+            <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#0D1117] border border-neutral-800 shadow-[0_32px_80px_rgba(0,0,0,0.30)]">
+              {/* Window Titlebar */}
+              <div className="px-5 py-4 bg-[#161B22] border-b border-neutral-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E]" />
+                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29]" />
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+                  <Play className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>AI Agent Session &mdash; Execution Log</span>
+                </div>
+                <button
+                  onClick={() => copyText('agent', agentSessionCode)}
+                  className="px-3 py-1.5 rounded-lg bg-[#21262D] hover:bg-[#30363D] border border-neutral-700 text-xs font-mono text-neutral-200 transition-colors flex items-center gap-1.5 cursor-pointer"
+                >
+                  {copiedStep === 'agent' ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy Snippet</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Window Code Content */}
+              <div className="p-6 sm:p-8 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto text-neutral-200 space-y-3">
+                <div className="text-neutral-400">
+                  <span className="text-purple-400 font-bold">&gt;</span> Prompting Claude: &ldquo;Check my Sepolia ETH balance and draft a 0.015 ETH transfer to vitalik.eth&rdquo;
+                </div>
+                <div className="text-cyan-300">
+                  [MCP Client] <span className="text-white">Executing tool:</span> get_balance(&#123; address: &quot;0x71C...E39a&quot; &#125;)
+                </div>
+                <div className="text-emerald-400">
+                  [Weth Core]  Returned: &#123; balance: &quot;1.4820 ETH&quot;, status: &quot;SAFE&quot; &#125;
+                </div>
+                <div className="pt-2 text-cyan-300">
+                  [MCP Client] <span className="text-white">Executing tool:</span> simulate_transaction(&#123; to: &quot;vitalik.eth&quot;, value: &quot;0.015 ETH&quot; &#125;)
+                </div>
+                <div className="text-emerald-400">
+                  [Weth Core]  Simulation SUCCESS. Gas Estimated: 21,000 | Fee: 0.00014 ETH
+                </div>
+                <div className="pt-2 text-cyan-300">
+                  [MCP Client] <span className="text-white">Executing tool:</span> create_transaction_draft(...)
+                </div>
+                <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-200 font-semibold">
+                  [Weth Core] STAGED DRAFT #9011 &rarr; STATUS: PENDING_APPROVAL (Quarantine Active)
+                  <div className="text-xs font-normal text-purple-300/80 mt-1">
+                    Action Required: Open http://localhost:3002/signing to inspect payload and sign with MetaMask.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Editorial Copy */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#7342E2]/10 text-[#7342E2] text-xs font-bold tracking-wide uppercase">
+                03 / ZERO-TRUST SECURITY
+              </div>
+              <h2
+                className="text-3xl sm:text-4xl font-bold text-[#192837] tracking-tight leading-tight"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                AI Drafts. Only You Sign.
+              </h2>
+              <p className="text-sm sm:text-base text-[#192837]/75 leading-relaxed">
+                AI agents can reason, simulate gas, and prepare payload parameters—but can never sign or broadcast. Every staged draft waits in local quarantine until you explicitly authorize it with your wallet extension.
+              </p>
+              <ul className="space-y-3 text-sm font-medium text-[#192837]/85 pt-2">
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Private keys never exposed to AI models
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Human-in-the-loop payload inspection &amp; risk flags
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#7342E2]/15 text-[#7342E2] flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </span>
+                  Tamper-proof PostgreSQL transaction audit trail
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* CORE ARCHITECTURE SECTION */}
       <section id="features" className="py-24 max-w-[1280px] mx-auto px-5 sm:px-8 border-b border-neutral-200">
