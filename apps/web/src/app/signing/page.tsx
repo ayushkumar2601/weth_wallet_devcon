@@ -214,7 +214,7 @@ export default function SigningPage() {
         <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="text-xs font-mono text-neutral-500">
-              DRAFT-TEST #9011 &bull; Sepolia Agent Transfer
+              DRAFT-TEST #9011 &bull; Sepolia Agent Transfer (Demo Preview)
             </div>
             <div className="text-sm font-semibold text-neutral-900 dark:text-white mt-1">
               Send 0.015 ETH to 0x4B20...91A8

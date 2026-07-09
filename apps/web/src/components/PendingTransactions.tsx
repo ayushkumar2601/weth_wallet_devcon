@@ -38,6 +38,10 @@ export function PendingTransactions() {
   });
 
   const handleSign = async (draft: any) => {
+    if (!isConnected) {
+      alert('Please connect your wallet (Phantom or MetaMask) using the Connect button at the top right before signing.');
+      return;
+    }
     try {
       const hash = await sendTransactionAsync({
         to: draft.toAddress as `0x${string}`,
@@ -45,8 +49,9 @@ export function PendingTransactions() {
         data: draft.data && draft.data !== '0x' ? (draft.data as `0x${string}`) : undefined,
       });
       await broadcastMutation.mutateAsync({ draftId: draft.id, hash });
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error('Wallet signing error:', err);
+      alert(`Wallet signing error: ${err?.shortMessage || err?.message || 'Transaction rejected or wallet did not open'}`);
     }
   };
 
@@ -65,7 +70,8 @@ export function PendingTransactions() {
 
       <div className="space-y-3">
         {drafts.map((draft: any) => {
-          const isApproved = !!approvedIds[draft.id] || draft.status === 'APPROVED';
+          const isSignedOnChain = !!approvedIds[draft.id] || draft.status === 'BROADCASTED' || draft.status === 'EXECUTED';
+          const isAgentApproved = draft.status === 'APPROVED';
 
           return (
             <div
@@ -73,8 +79,15 @@ export function PendingTransactions() {
               className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div className="space-y-1">
-                <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                  ID: {draft.id}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                    ID: {draft.id}
+                  </span>
+                  {isAgentApproved && (
+                    <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-[10px] font-semibold">
+                      AI Policy: SAFE
+                    </span>
+                  )}
                 </div>
                 <div className="text-sm font-medium text-neutral-900 dark:text-white">
                   Transfer {draft.value} Wei &rarr;{' '}
@@ -88,10 +101,10 @@ export function PendingTransactions() {
               </div>
 
               <div className="shrink-0">
-                {isApproved ? (
+                {isSignedOnChain ? (
                   <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
                     <Check size={14} />
-                    Sign Approved
+                    Signed &amp; Broadcasted
                   </div>
                 ) : (
                   <button
@@ -104,7 +117,7 @@ export function PendingTransactions() {
                     ) : (
                       <AlertCircle size={14} />
                     )}
-                    Approve &amp; Sign
+                    Sign with Wallet
                   </button>
                 )}
               </div>
