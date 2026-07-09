@@ -70,7 +70,7 @@ export function PendingTransactions() {
           return (
             <div
               key={draft.id}
-              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4"
             >
               <div className="space-y-1">
                 <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
@@ -89,7 +89,7 @@ export function PendingTransactions() {
 
               <div className="shrink-0">
                 {isApproved ? (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
                     <Check size={14} />
                     Sign Approved
                   </div>
@@ -97,7 +97,7 @@ export function PendingTransactions() {
                   <button
                     onClick={() => handleSign(draft)}
                     disabled={isSigning || broadcastMutation.isPending}
-                    className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer"
+                    className="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white px-4 py-2 rounded-none font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     {isSigning || broadcastMutation.isPending ? (
                       <Loader2 size={14} className="animate-spin" />

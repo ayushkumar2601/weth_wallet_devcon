@@ -32,7 +32,7 @@ export default function PortfolioPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {(!data?.tokens || data.tokens.length === 0) && (
-            <div className="col-span-full py-12 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-xl text-center text-xs text-neutral-500">
+            <div className="col-span-full py-12 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-none text-center text-xs text-neutral-500">
               No ERC20 tokens found in this wallet.
             </div>
           )}
@@ -40,9 +40,9 @@ export default function PortfolioPage() {
           {data?.tokens?.map((token: any, i: number) => (
             <div
               key={i}
-              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-xl flex items-center gap-4"
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-none flex items-center gap-4"
             >
-              <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-900 rounded-lg flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 bg-neutral-100 dark:bg-neutral-900 rounded-none flex items-center justify-center shrink-0">
                 <CircleDollarSign className="w-4 h-4 text-neutral-600 dark:text-neutral-400" />
               </div>
               <div className="overflow-hidden min-w-0">

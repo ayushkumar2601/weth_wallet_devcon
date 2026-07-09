@@ -32,7 +32,7 @@ export default function TransactionsPage() {
       ) : (
         <div className="space-y-3">
           {(!data?.transactions || data.transactions.length === 0) && (
-            <div className="py-12 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-xl text-center text-xs text-neutral-500">
+            <div className="py-12 border border-neutral-200 dark:border-neutral-800 border-dashed rounded-none text-center text-xs text-neutral-500">
               No recent transactions found.
             </div>
           )}
@@ -42,10 +42,10 @@ export default function TransactionsPage() {
             return (
               <div
                 key={i}
-                className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 rounded-xl flex items-center justify-between gap-4"
+                className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 rounded-none flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shrink-0 text-neutral-700 dark:text-neutral-300">
+                  <div className="w-8 h-8 rounded-none bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shrink-0 text-neutral-700 dark:text-neutral-300">
                     {isOutgoing ? <ArrowUpRight className="w-4 h-4" /> : <ArrowDownLeft className="w-4 h-4" />}
                   </div>
                   <div className="min-w-0">
@@ -53,7 +53,7 @@ export default function TransactionsPage() {
                       <span className="text-sm font-semibold text-neutral-900 dark:text-white">
                         {tx.value || 0} {tx.asset}
                       </span>
-                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400">
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-none bg-neutral-100 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400">
                         {tx.category}
                       </span>
                     </div>

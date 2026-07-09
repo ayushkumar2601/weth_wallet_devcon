@@ -28,16 +28,37 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col bg-background text-foreground selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('weth-theme') || 'dark';
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                  } else {
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black transition-colors">
         <Providers>
           <div className="flex flex-col min-h-screen">
             <Navigation />
-            <main className="flex-1 w-full max-w-4xl mx-auto px-6 py-10">
+            <main className="flex-1 w-full max-w-5xl mx-auto px-6 py-10">
               {children}
             </main>
             <footer className="w-full py-6 mt-16 border-t border-neutral-200 dark:border-neutral-900 text-center text-xs text-neutral-500 dark:text-neutral-400">
-              Designed and Developed by <span className="font-semibold text-neutral-900 dark:text-neutral-100">Ayush</span>
+              Designed and Developed by <span className="font-semibold text-neutral-900 dark:text-neutral-100">Ayush</span> with ❤️
             </footer>
           </div>
         </Providers>

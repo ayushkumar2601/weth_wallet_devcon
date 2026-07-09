@@ -33,7 +33,7 @@ export default function RiskPage() {
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-xl space-y-3">
+          <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-6 rounded-none space-y-3">
             <h3 className="text-sm font-semibold text-neutral-900 dark:text-white flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-neutral-500" />
               Security Policy Enforcement
@@ -53,7 +53,7 @@ export default function RiskPage() {
             </h3>
 
             {(!data?.riskyApprovals || data.riskyApprovals.length === 0) && (
-              <div className="p-8 border border-neutral-200 dark:border-neutral-800 rounded-xl text-center text-xs text-neutral-500">
+              <div className="p-8 border border-neutral-200 dark:border-neutral-800 rounded-none text-center text-xs text-neutral-500">
                 No high-risk allowances or suspicious contract interactions detected.
               </div>
             )}
@@ -61,7 +61,7 @@ export default function RiskPage() {
             {data?.riskyApprovals?.map((risk: any, i: number) => (
               <div
                 key={i}
-                className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 rounded-xl flex items-center justify-between gap-4"
+                className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-4 rounded-none flex items-center justify-between gap-4"
               >
                 <div>
                   <div className="text-sm font-medium text-neutral-900 dark:text-white">

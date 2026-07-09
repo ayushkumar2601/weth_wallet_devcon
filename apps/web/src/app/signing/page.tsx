@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
-import { ChevronDown, ChevronUp, Eye, EyeOff, Trash2, Plus } from 'lucide-react';
+import { ChevronDown, ChevronUp, Eye, EyeOff, Trash2 } from 'lucide-react';
 import { PendingTransactions } from '../../components/PendingTransactions';
 
 export default function SigningPage() {
@@ -67,8 +67,8 @@ export default function SigningPage() {
         </button>
       </div>
 
-      {/* Expandable Secret Phrase Section */}
-      <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-xl overflow-hidden">
+      {/* Expandable Secret Phrase Section with sharp corners */}
+      <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-none overflow-hidden">
         <button
           onClick={() => setShowSecret(!showSecret)}
           className="w-full p-5 flex items-center justify-between text-left hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors"
@@ -101,7 +101,7 @@ export default function SigningPage() {
               ].map((word, i) => (
                 <div
                   key={word}
-                  className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg px-3 py-2 text-xs flex items-center gap-2"
+                  className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-none px-3 py-2 text-xs flex items-center gap-2"
                 >
                   <span className="text-neutral-400 select-none">{i + 1}.</span>
                   <span>{word}</span>
@@ -123,30 +123,30 @@ export default function SigningPage() {
         <div className="flex items-center gap-2.5">
           <button
             onClick={handleAddWallet}
-            className="bg-neutral-900 text-white dark:bg-white dark:text-black hover:opacity-90 px-4 py-2 rounded-lg font-medium text-xs transition-opacity"
+            className="bg-neutral-900 text-white dark:bg-white dark:text-black hover:opacity-90 px-4 py-2 rounded-none font-medium text-xs transition-opacity"
           >
             Add Wallet
           </button>
           <button
             onClick={handleClearWallets}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-xs transition-colors"
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-none font-medium text-xs transition-colors"
           >
             Clear Wallets
           </button>
         </div>
       </div>
 
-      {/* Wallet Cards List */}
+      {/* Wallet Cards List with sharp corners */}
       <div className="space-y-4">
         {wallets.length === 0 ? (
-          <div className="border border-neutral-200 dark:border-neutral-800 rounded-xl p-10 text-center text-sm text-neutral-500">
+          <div className="border border-neutral-200 dark:border-neutral-800 rounded-none p-10 text-center text-sm text-neutral-500">
             No wallets configured. Click &ldquo;Add Wallet&rdquo; above to create or connect one.
           </div>
         ) : (
           wallets.map((wallet) => (
             <div
               key={wallet.id}
-              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-xl p-6 space-y-4"
+              className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-none p-6 space-y-4"
             >
               <div className="flex items-center justify-between">
                 <span className="text-lg font-bold text-neutral-900 dark:text-white">
@@ -162,7 +162,7 @@ export default function SigningPage() {
               </div>
 
               {/* Nested dark monochrome wallet box exactly matching Kosh v1.3 */}
-              <div className="bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800/80 rounded-xl p-4 space-y-4">
+              <div className="bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800/80 rounded-none p-4 space-y-4">
                 <div>
                   <div className="text-xs font-medium text-neutral-900 dark:text-neutral-100 mb-1">
                     Public Key
@@ -185,7 +185,6 @@ export default function SigningPage() {
                     <button
                       onClick={() => setShowPrivateKey(!showPrivateKey)}
                       className="text-neutral-500 hover:text-neutral-900 dark:hover:text-white shrink-0 transition-colors"
-                      title={showPrivateKey ? 'Hide Private Key' : 'Show Private Key'}
                     >
                       {showPrivateKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -211,8 +210,8 @@ export default function SigningPage() {
         {/* Live Pending Transactions component */}
         <PendingTransactions />
 
-        {/* Demo Signing Row to show red for approve sign and green when approved */}
-        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Demo Signing Row with sharp corners */}
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5 rounded-none flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="text-xs font-mono text-neutral-500">
               DRAFT-TEST #9011 &bull; Sepolia Agent Transfer
@@ -227,13 +226,13 @@ export default function SigningPage() {
 
           <div className="shrink-0">
             {demoApproved ? (
-              <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
+              <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-none bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-medium">
                 Sign Approved
               </div>
             ) : (
               <button
                 onClick={() => setDemoApproved(true)}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-xs transition-colors cursor-pointer"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-none font-medium text-xs transition-colors cursor-pointer"
               >
                 Approve &amp; Sign
               </button>

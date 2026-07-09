@@ -21,17 +21,17 @@ export function Navigation() {
 
   return (
     <header className="w-full border-b border-neutral-200 dark:border-neutral-900 bg-background transition-colors">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Top Left: Logo + Badge */}
+      <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Top Left: Logo + Badge with Sharp Corners */}
         <div className="flex items-center gap-8">
           <Link href="/dashboard" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg border border-neutral-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white">
+            <div className="w-8 h-8 rounded-none border border-neutral-300 dark:border-neutral-800 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white">
               <Box className="w-4.5 h-4.5 stroke-[2.2]" />
             </div>
             <span className="text-xl font-bold tracking-tight text-neutral-900 dark:text-white">
               Weth
             </span>
-            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300">
+            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-none border border-neutral-300 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300">
               v1.1
             </span>
           </Link>
@@ -59,17 +59,17 @@ export function Navigation() {
 
         {/* Top Right: Theme Toggle + Connect Wallet */}
         <div className="flex items-center gap-5">
-          {/* Theme Switch exactly matching Kosh v1.3 inspiration */}
+          {/* Theme Switch */}
           <div className="flex items-center gap-2.5 text-neutral-600 dark:text-neutral-400">
             <Sun className="w-4 h-4" />
             <button
               type="button"
               onClick={toggleTheme}
-              className="w-11 h-6 rounded-full bg-neutral-300 dark:bg-neutral-800 p-0.5 relative transition-colors focus:outline-none border border-neutral-400/30 dark:border-neutral-700"
+              className="w-11 h-6 rounded-none bg-neutral-300 dark:bg-neutral-800 p-0.5 relative transition-colors focus:outline-none border border-neutral-400/30 dark:border-neutral-700 cursor-pointer"
               aria-label="Toggle theme"
             >
               <span
-                className={`block w-4.5 h-4.5 rounded-full bg-white dark:bg-neutral-200 transition-transform ${
+                className={`block w-4.5 h-4.5 rounded-none bg-white dark:bg-neutral-200 transition-transform ${
                   theme === 'dark' ? 'translate-x-5' : 'translate-x-0'
                 } shadow-sm`}
               />

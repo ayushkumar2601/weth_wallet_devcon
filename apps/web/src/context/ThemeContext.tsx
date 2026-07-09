@@ -20,28 +20,36 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem('weth-theme') as Theme | null;
-    if (saved === 'dark' || saved === 'light') {
-      setThemeState(saved);
-      applyThemeClass(saved);
-    } else {
-      setThemeState('dark');
-      applyThemeClass('dark');
-    }
-  }, []);
-
   const applyThemeClass = (targetTheme: Theme) => {
     const root = document.documentElement;
+    const body = document.body;
+
     if (targetTheme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
+      root.style.colorScheme = 'dark';
+      if (body) {
+        body.classList.add('dark');
+        body.classList.remove('light');
+      }
     } else {
       root.classList.add('light');
       root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+      if (body) {
+        body.classList.add('light');
+        body.classList.remove('dark');
+      }
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem('weth-theme') as Theme | null;
+    const initialTheme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+    setThemeState(initialTheme);
+    applyThemeClass(initialTheme);
+  }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);

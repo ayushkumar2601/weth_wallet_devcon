@@ -27,7 +27,7 @@ export default function AuditPage() {
       {isLoading ? (
         <div className="py-12 text-center text-xs text-neutral-500">Loading audit trail...</div>
       ) : (
-        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-xl overflow-hidden">
+        <div className="border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 rounded-none overflow-hidden">
           <table className="w-full text-left text-xs">
             <thead className="bg-neutral-100 dark:bg-neutral-900 text-neutral-500 font-mono border-b border-neutral-200 dark:border-neutral-800">
               <tr>
@@ -55,7 +55,7 @@ export default function AuditPage() {
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
                   <td className="p-4">
-                    <span className="inline-block px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-900 font-mono font-medium text-[11px] text-neutral-800 dark:text-neutral-200">
+                    <span className="inline-block px-2 py-1 rounded-none bg-neutral-100 dark:bg-neutral-900 font-mono font-medium text-[11px] text-neutral-800 dark:text-neutral-200">
                       {log.toolName}
                     </span>
                   </td>
