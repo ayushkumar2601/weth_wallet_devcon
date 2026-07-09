@@ -16,12 +16,10 @@
 ---
 
 <!-- ========================================================================== -->
-<!-- HERO IMAGE / DEMO BANNER PLACEHOLDER                                       -->
-<!-- Replace the src below with your product banner, dashboard screenshot,      -->
-<!-- or architectural hero illustration once ready.                             -->
+<!-- HERO IMAGE / DEMO BANNER                                                   -->
 <!-- ========================================================================== -->
 <div align="center">
-  <img src="https://via.placeholder.com/1200x520/0B0E14/3B82F6?text=WETH+AI+Agent+%2B+Ethereum+Infrastructure+Hero+Banner" alt="WETH AI Agentic Wallet Infrastructure Hero Banner" width="100%" style="border-radius: 12px; border: 1px solid #1E293B;" />
+  <img src="public/dashboard.png" alt="WETH AI Agentic Wallet Infrastructure Hero Banner" width="100%" />
   <p><i>Figure 1: WETH Unified Architecture — Autonomous AI Reasoning paired with Zero-Trust Human Execution</i></p>
 </div>
 
@@ -299,27 +297,31 @@ WETH equips AI models with **13 strictly typed MCP tools** grouped across four s
 ## 5. Application Gallery & Visual Showcase
 
 <!-- ========================================================================== -->
-<!-- UI SCREENSHOT PLACEHOLDERS                                                 -->
-<!-- Replace these placeholder blocks with actual screenshots of your Next.js   -->
-<!-- dashboard, risk engine visualizer, and Claude Desktop agent interactions.  -->
+<!-- UI SCREENSHOT GALLERY                                                      -->
 <!-- ========================================================================== -->
 
-### 5.1 Next.js 15 Human-in-the-Loop Dashboard
+### 5.1 Next.js Human-in-the-Loop Dashboard (`dashboard`)
 <div align="center">
-  <img src="https://via.placeholder.com/1000x500/0F172A/38BDF8?text=Next.js+15+Dashboard+%E2%80%94+Pending+Transactions+%26+MetaMask+Signing" alt="WETH Web Dashboard Preview" width="90%" style="border-radius: 8px; border: 1px solid #334155;" />
+  <img src="public/dashboard.png" alt="WETH Web Dashboard Preview" width="95%" />
   <p><i>Figure 2: Dark-mode Web Dashboard displaying PENDING_APPROVAL AI drafts awaiting user MetaMask signature.</i></p>
 </div>
 
-### 5.2 AI Portfolio & Risk Analysis Matrix
+### 5.2 Signing Console & Wallet Manager (`wallet`)
 <div align="center">
-  <img src="https://via.placeholder.com/1000x480/0F172A/10B981?text=Portfolio+Concentration+%26+Risky+ERC20+Allowance+Audit+View" alt="Risk Analysis View" width="90%" style="border-radius: 8px; border: 1px solid #334155;" />
-  <p><i>Figure 3: Real-time quantitative risk scoring, concentration breakdown, and automated allowance alert indicators.</i></p>
+  <img src="public/wallet.png" alt="Signing & Wallet Management View" width="95%" />
+  <p><i>Figure 3: Expandable secret phrase management, chain selector, and human-in-the-loop transaction signing console.</i></p>
 </div>
 
-### 5.3 Claude Desktop Agent Interaction
+### 5.3 Execution History & Immutable Ledger (`history`)
 <div align="center">
-  <img src="https://via.placeholder.com/1000x480/0F172A/A855F7?text=Claude+Desktop+executing+WETH+MCP+Tools+(Simulation+%2B+Drafting)" alt="Claude Desktop MCP Session" width="90%" style="border-radius: 8px; border: 1px solid #334155;" />
-  <p><i>Figure 4: Claude autonomously calling resolve_ens, simulate_transaction, and create_transaction_draft.</i></p>
+  <img src="public/history.png" alt="Transaction Execution History" width="95%" />
+  <p><i>Figure 4: Immutable ledger of signed transfers and contract interactions.</i></p>
+</div>
+
+### 5.4 Claude Desktop & MCP Agent Interaction (`claude1`)
+<div align="center">
+  <img src="public/claude1.png" alt="Claude Desktop MCP Session" width="95%" />
+  <p><i>Figure 5: Claude autonomously inspecting balances, evaluating safety, and drafting transactions via WETH MCP Tools.</i></p>
 </div>
 
 ---
