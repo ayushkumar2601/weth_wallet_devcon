@@ -8,6 +8,9 @@
 [![Model Context Protocol](https://img.shields.io/badge/MCP-1.0.0-8A2BE2?style=for-the-badge)](https://modelcontextprotocol.io)
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Ethereum Sepolia](https://img.shields.io/badge/Ethereum-Sepolia_Testnet-627EEA?style=for-the-badge&logo=ethereum&logoColor=white)](https://sepolia.etherscan.io/)
+<br />
+[![Track: AI x Ethereum](https://img.shields.io/badge/Track-AI_x_Ethereum-FF007A?style=for-the-badge&logo=ethereum&logoColor=white)](#)
+[![Track: Infratooling](https://img.shields.io/badge/Track-Infratooling-00D1B2?style=for-the-badge&logo=probot&logoColor=white)](#)
 
 *Bridging Autonomous AI Agents with Decentralized Finance through Deterministic Policy Engines, Real-Time Blockchain Indexing, and Human-in-the-Loop Cryptographic Execution.*
 
@@ -51,6 +54,10 @@
 ---
 
 ## 1. Executive Overview & Core Philosophy
+
+> **🎯 Target Buildathon Tracks:**
+> - **Primary Track: AI x Ethereum** — Architected specifically to connect autonomous Large Language Model agents (via standard Model Context Protocol) with secure Ethereum execution and zero-trust human-in-the-loop cryptographic signing.
+> - **Secondary Track: Infratooling (Infra & Tooling)** — Open-source developer infrastructure providing stdio JSON-RPC MCP servers, PostgreSQL transaction auditing, deterministic Zod policy guardrails, and automated gas simulation pipelines.
 
 As Large Language Models (LLMs) and autonomous agents evolve from conversation assistants into actionable economic agents, their integration with blockchain networks becomes critical. However, granting direct private key custody to non-deterministic AI models introduces catastrophic financial risk.
 
